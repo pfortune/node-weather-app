@@ -10,16 +10,20 @@ const forecast = (latitude, longitude, callback) => {
       console.log('Unable to find location. Try again.');
     } else {
       const data = body;
-      const summary = data.daily.data[0].summary;
+      const today = data.daily.data[0];
 
       const temp = data.currently.temperature;
       const chanceOfRain = data.currently.precipProbability * 100;
 
       callback(
         undefined,
-        `${summary} It is currently ${Math.floor(
-          temp
-        )} degrees out. There is ${chanceOfRain}% chance of rain.`
+        `
+        ${today.summary} 
+        The current temperature is ${Math.floor(temp)} degrees out. 
+        The lowest temperature today will be ${today.temperatureMin} degrees.
+        The highest temperature today will be ${today.temperatureMax} degrees.
+        There is ${chanceOfRain}% chance of rain.
+        `
       );
     }
   });
